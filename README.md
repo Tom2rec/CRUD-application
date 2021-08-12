@@ -4,11 +4,18 @@
 
 ### Usage
 ```bash
-$ git clone git@github.com:Tom2rec/CRUD-application.git
-$ cd CRUD-application
-$ mvn clean package
-$ java -jar target/Task-0.0.1.jar
-
-$ firefox localhost:8080 
-# or point your browser to: localhost:8080
+git clone git@github.com:Tom2rec/CRUD-application.git
+```
+```bash
+cd CRUD-application
+```
+```bash
+mvn clean package
+```
+```bash
+java -jar target/Task-0.0.1.jar
+```
+#### point your browser to: localhost:8080
+```bash
+firefox localhost:8080 
 ```
