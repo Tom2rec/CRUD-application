@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Service</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+
+</head>
+<body>
+    <div class="alert alert-info" th:if="${message}">
+        <h4 th:text="${message}"></h4>
+    </div>
+    <nav>
+        <h1>
+            Customer Service
+        </h1>
+        <button id="addCustomer" class="btn btn-success" onclick="showForm()">Add Customer</button>
+
+    </nav>
+    <hr>
+    <section id="customerTable">
+        <form method="POST"  th:object="${customer}">
+            <table class="table table-bordered table-hover" >
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Zip</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Phone</th>
+                    <th>Additional Info</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="customerTableBody">
+                <div th:if="${customers}" th:each="customer : ${customers}">
+                    <tr id="readMode" >
+                        <td th:text="${customer.id}"></td>
+                        <td th:text="${customer.name}"></td>
+                        <td th:text="${customer.surname}"></td>
+                        <td th:text="${customer.email}"></td>
+                        <td th:text="${customer.address}"></td>
+                        <td th:text="${customer.zip}"></td>
+                        <td th:text="${customer.city}"></td>
+                        <td th:text="${customer.country}"></td>
+                        <td th:text="${customer.phone}"></td>
+                        <td>
+                            <a onclick="toggleName(this)" class="btn btn-primary" data-toggle="collapse" th:href="@{#collapseInfo{id} (id = ${customer.id})}" role="button" aria-expanded="false" th:attrappend="aria-controls='collapseInfo' + ${customer.id}">
+                                See more...
+                            </a>
+                            <div class="collapse" th:attrappend="id='collapseInfo' + ${customer.id}">
+                                <div class="card card-body" th:text="${customer.additionalInfo}"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
+                            <a th:href="@{/delete/{id} (id = ${customer.id})}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    <tr class="editMode">
+                        <td name="id" th:value="${customer.id}" th:text="${customer.id}"></td>
+                        <td><input maxlength="30" disabled="disabled" name="name" th:value="${customer.name}"></td>
+                        <td><input maxlength="30" disabled="disabled" name="surname" th:value="${customer.surname}"></td>
+                        <td><input maxlength="30" disabled="disabled" name="email" th:value="${customer.email}"></td>
+                        <td><input maxlength="30" disabled="disabled" name="address" th:value="${customer.address}"></td>
+                        <td><input maxlength="30" disabled="disabled" name="zip" th:value="${customer.zip}"></td>
+                        <td><input maxlength="30" disabled="disabled" name="city" th:value="${customer.city}"></td>
+                        <td><input maxlength="30" disabled="disabled" name="country" th:value="${customer.country}"></td>
+                        <td><input maxlength="30" disabled="disabled" name="phone" th:value="${customer.phone}"></td>
+                        <td><textarea maxlength="255" disabled="disabled" name="additionalInfo" th:text="${customer.additionalInfo}"></textarea></td>
+                        <td>
+                            <button type="submit" class="btn btn-success">Update</button>
+                            <a th:href="@{/delete/{id} (id = ${customer.id})}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                </div>
+
+                <tr id="form" style="display: none">
+                    <td>ID</td>
+                    <td><input maxlength="30" disabled="disabled" th:field="*{name}" type="text"></td>
+                    <td><input maxlength="30" disabled="disabled" th:field="*{surname}" type="text"></td>
+                    <td><input maxlength="30" disabled="disabled" th:field="*{email}" type="text"></td>
+                    <td><input maxlength="30" disabled="disabled" th:field="*{address}" type="text"></td>
+                    <td><input maxlength="30" disabled="disabled" th:field="*{zip}" type="text"></td>
+                    <td><input maxlength="30" disabled="disabled" th:field="*{city}" type="text"></td>
+                    <td><input maxlength="30" disabled="disabled" th:field="*{country}" type="text"></td>
+                    <td><input maxlength="30" disabled="disabled" th:field="*{phone}" type="text"></td>
+                    <td><textarea maxlength="255" disabled="disabled" th:field="*{additionalInfo}"></textarea></td>
+                    <td><input type="submit" class="btn btn-success" value="Add"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </section>
+    <script th:src="@{/js/script.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    </head>
+</body>
+</html>
